@@ -2,7 +2,10 @@ let POSSIBLE_WORDS= ["obdurate", "verislimitude", "defenestrate", "obsequious", 
     "toady", "imdempotent"];
     let guesses = "";
 let word="";
+let MAX_GUESSES=6;
+let guessCount = MAX_GUESSES;
     function newGame(){
+        guesses="";
         let randomIndex = parseInt(
         Math.random()* POSSIBLE_WORDS.length);
         word = POSSIBLE_WORDS[randomIndex];
@@ -11,25 +14,31 @@ let word="";
     function guess() {
         let input = document.getElementById("guess");
         let letter = input.value;
+        if(word.indexOf(letter)<0){
+            guessCount--;
+        }
         guesses+=letter;
         updateScreen();
-
     }
     function updateScreen() {
-let clueString = "";
+        let clueString = "";
         for(let i = 0;i<word.length;i++){
             let letter = word.charAt(i);
             if(guesses.indexOf(letter) >=0){
-
+            clueString+=letter+" ";
             }
             else{
-                clueString+="_";
+                clueString+="_"; }
             }
-                }
+                
         let clue = document.getElementById("clue")
         clue.textContent = clueString;
+        
         let guessArea = document.getElementById("guesses");
         guessArea.textContent = "Guessed Letters: "+guesses;
+
+        let image = document.getElementById("hangmanpic");
+        image.src = 'images/hangman6$(guessCount).gif';
     }
     function guess() {
 
